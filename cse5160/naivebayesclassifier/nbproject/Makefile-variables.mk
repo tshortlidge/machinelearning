@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-MacOSX
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-MacOSX
-CND_ARTIFACT_NAME_Debug=test
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-MacOSX/test
+CND_ARTIFACT_NAME_Debug=naivebayesclassifier
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-MacOSX/naivebayesclassifier
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-MacOSX/package
-CND_PACKAGE_NAME_Debug=test.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-MacOSX/package/test.tar
+CND_PACKAGE_NAME_Debug=naivebayesclassifier.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-MacOSX/package/naivebayesclassifier.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-MacOSX
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-MacOSX
-CND_ARTIFACT_NAME_Release=test
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/test
+CND_ARTIFACT_NAME_Release=naivebayesclassifier
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/naivebayesclassifier
 CND_PACKAGE_DIR_Release=dist/Release/GNU-MacOSX/package
-CND_PACKAGE_NAME_Release=test.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/test.tar
+CND_PACKAGE_NAME_Release=naivebayesclassifier.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/naivebayesclassifier.tar
 #
 # include compiler specific variables
 #

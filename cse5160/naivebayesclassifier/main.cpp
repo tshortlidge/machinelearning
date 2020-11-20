@@ -17,12 +17,38 @@
 
 using namespace std;
 void calcClass(string[],int);
-void stabClass(string[], int);
-
+void calcStab(string[],string[],int);
+void calcError(string[],string[],int);
+//void calcSign(string[],int);
 
 /*
  * 
  */
+
+
+//Global Variable for Storing Probabilities.
+
+//for Stability
+    float pStabYes;//2-1
+    float pStabNo;//1-1
+    float pXStabYes;//2-2
+    float pXStabNo;//2-1
+    
+//error
+    float pErrorXlNo;//1-1
+    float pErrorLxNo;//1-2
+    float pErrorMmNo;//1-3
+    float pErrorSsNo;//1-4
+    float pErrorXlYes;//2-1
+    float pErrorLxYes;//2-2
+    float pErrorMmYes;//2-3
+    float pErrorSsYes;//2-4
+
+
+
+
+
+
 int main(int argc, char** argv) {
     
     string array[] = {"2", "*", "*", "*", "*", "*", "2",
@@ -38,7 +64,7 @@ int main(int argc, char** argv) {
                                                         };
     
     // Class: NOAUTO, AUTO-> 1,2
-    //STABILITY: stab, xstab->1,2
+    // STABILITY: stab, xstab->1,2
     // ERROR: XL,LX,MM,SS-> 1,2,3,4
     // SIGN: PP,NN-> 1,2
     // WIND: HEAD,TAIL->1,2
@@ -46,6 +72,10 @@ int main(int argc, char** argv) {
     // VISIBILITY: YES,NO->1,2
     // * = dont care condition handles missing values by ignoring during probability
     const int MAX_SIZE = 8;
+    
+
+    
+    
     int len1 = sizeof(array)/sizeof(array[0]);
     cout<<"length of array ->"<<len1<<endl;
     string catArr[MAX_SIZE] = {};//array that holds category array
@@ -126,18 +156,30 @@ int main(int argc, char** argv) {
             cout<<catArray[i]<<endl;
         }
     */
+
     calcClass(catArr,incr1);
-    stabClass(stabArr,incr2);
+    calcStab(catArr,stabArr,incr2);
+    calcError(catArr,errorArr,incr3);
+    //calcSign(signArr,incr4);
     
+   cout<< pErrorXlNo<<endl;//1-1
+   cout<< pErrorLxNo<<endl;//1-2
+   cout<< pErrorMmNo<<endl;//1-3
+   cout<< pErrorSsNo<<endl;//1-4
+   cout<< pErrorXlYes<<endl;//2-1
+   cout<< pErrorLxYes<<endl;//2-2
+   cout<< pErrorMmYes<<endl;//2-3
+   cout<< pErrorSsYes<<endl;//2-4
     return 0;
 }
 
 void calcClass(string x[], int length){
-    
+    int totalProb = 0;
     float probA = 0;
     float probB = 0;
     float totalAB = 0;
-    for(int i=0;i<length-1;i++){
+    float probNO, probYES = 0;
+    for(int i=0;i<length;i++){
         cout<<x[i]<<endl;
         if(x[i] == "1"){
             probA++;
@@ -147,46 +189,166 @@ void calcClass(string x[], int length){
             probB++;
             totalAB++;
         }
-        else if(x[i]=="*"){
-            cout<<"ERROR"<<endl;
-            cout<<x[i];
-        }
+        
 
         
     }
-    probA = probA/totalAB;
-    probB = probB/totalAB;
-        cout<<"Probability of A(NOAUTO) "<<probA<<endl;
-        cout<<"Probability of B(AUTO) "<<probB<<endl;
-}
-void stabClass(string x[], int length){
+    probNO = probA/totalAB;
+    probYES = probB/totalAB;
+    totalProb = probA + probB;
     
-    float probA = 0;
-    float probB = 0;
-    float probC = 0; //dont care condition
-    float totalAB = 0;
-    for(int i=0;i<length-1;i++){
-        cout<<x[i]<<endl;
-        if(x[i] == "1"){
-            probA++;
-            totalAB++;
+        cout<<"Probability of A(NOAUTO) "<<probA<<"/"<<totalProb<<" - "<<probNO<<endl;
+        cout<<"Probability of B(AUTO) "<<probB<<"/"<<totalProb<<" - "<<probYES<<endl;
+}
+void calcStab(string x[],string y[], int length){
+    //category Stability
+    
+    
+    float probAyes = 0;
+    float probAno = 0;
+    float probAtot = 0;
+    
+    float noauto = 0;
+    
+    float probByes = 0;
+    float probBno = 0;
+    float probBtot = 0;
+    
+    float autopilot = 0;
+    
+    for(int i=0;i<length;i++){
+        cout<<x[i]<<" - "<<y[i]<<endl;
+        
+        if(x[i] == "1"){ //noauto - NO for no auto 
+            if(y[i]== "1"){ //stab
+                probAno++;
+                probAtot++;
+            }
+            if(y[i]== "2"){ //xstab
+                probBno++;
+                probAtot++;
+            }
+          noauto++;  
         }
-        if(x[i] == "2"){
-            probB++;
-            totalAB++;
+        
+        else if(x[i] == "2"){//auto - YES for AUTO
+            if(y[i]== "1"){ //stab
+                probAyes++;
+                probBtot++;
+            }
+            if(y[i]== "2"){ //xstab
+                probByes++;
+                probBtot++;
+            }
+          autopilot++;
         }
-        else if(x[i]=="*"){
-            probC++;
-            totalAB++;
-        }
-
         
     }
-    probA = probA/totalAB;
-    probB = probB/totalAB;
-        cout<<"Probability of A(stab) "<<probA<<endl;
-        cout<<"Probability of B(xstab) "<<probB<<endl;
+    cout<<"stab / yes - "<<probAyes<<"/"<<probBtot<<endl;// 2-1
+    pStabYes = probAyes/probBtot;
+    
+    cout<<"Xstab / yes - " <<probByes<<"/"<<probBtot<<endl;//2-2
+    pXStabYes = probByes/probBtot;
+
+    cout<<"stab / no - "<<probAno<<"/"<<probAtot<<endl;//1-1
+    pStabNo = probAno/probAtot;
+
+    cout<<"Xstab / no - " <<probBno<<"/"<<probAtot<<endl;//1-2   
+    pXStabNo = probBno/probAtot;
+    
 }
 
+void calcError(string x[],string y[], int length){
+    //category Stability
+
+    
+    float probAtot = 0;//probAtot = NOAUTO
+    float probBtot = 0;//probBtot = AUTO
+    
+    
+    float probAyes = 0;
+    float probAno = 0;
+    
+    
+    float probByes = 0;
+    float probBno = 0;
+
+    
+    float probCyes = 0;
+    float probCno = 0;
+    
+    float probDyes = 0;
+    float probDno = 0;
+    
+    
+    for(int i=0;i<length;i++){
+        cout<<x[i]<<" - "<<y[i]<<endl;
+        
+        if(x[i] == "1"){ //noauto - NO for no auto 
+            if(y[i]== "1"){ //stab
+                probAno++;
+                probAtot++;
+            }
+            if(y[i]== "2"){ //xstab
+                probBno++;
+                probAtot++;
+            }
+            if(y[i]== "3"){ //stab
+                probCno++;
+                probAtot++;
+            }
+            if(y[i]== "4"){ //xstab
+                probDno++;
+                probAtot++;
+            }
+        }
+        
+        else if(x[i] == "2"){//auto - YES for AUTO
+            if(y[i]== "1"){ //stab
+                probAyes++;
+                probBtot++;
+            }
+            if(y[i]== "2"){ //xstab
+                probByes++;
+                probBtot++;
+            }
+           if(y[i]== "3"){ //stab
+                probCno++;
+                probAtot++;
+            }
+            if(y[i]== "4"){ //xstab
+                probDno++;
+                probAtot++;
+            }
+        }
+        
+    }
+        // ERROR: XL,LX,MM,SS-> 1,2,3,4
+
+    cout<<"xl / yes - "<<probAyes<<"/"<<probBtot<<endl;// 2-1
+    pErrorXlYes = probAyes/probBtot;
+    
+    cout<<"lx / yes - " <<probByes<<"/"<<probBtot<<endl;//2-2
+    pErrorLxYes = probByes/probBtot;
+    
+    cout<<"mm / yes - "<<probCyes<<"/"<<probBtot<<endl;// 2-3
+    pErrorMmYes = probAyes/probBtot;
+    
+    cout<<"ss / yes - " <<probDyes<<"/"<<probBtot<<endl;//2-4
+    pErrorSsYes = probByes/probBtot;
+
+    cout<<"xl / no - "<<probAno<<"/"<<probAtot<<endl;//1-1
+    pErrorXlNo = probAno/probAtot;
+
+    cout<<"lx / no - " <<probBno<<"/"<<probAtot<<endl;//1-2   
+    pErrorLxNo = probBno/probAtot;
+    
+        cout<<"mm / no - "<<probCno<<"/"<<probAtot<<endl;//1-3
+    pErrorMmNo = probAno/probAtot;
+
+    cout<<"ss / no - " <<probDno<<"/"<<probAtot<<endl;//1-4   
+    pErrorSsNo = probBno/probAtot;
+    
+}
 
 

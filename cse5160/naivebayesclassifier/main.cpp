@@ -19,7 +19,7 @@ using namespace std;
 void calcClass(string[],int);
 void calcStab(string[],string[],int);
 void calcError(string[],string[],int);
-//void calcSign(string[],int);
+void calcSign(string[],string[],int);
 
 /*
  * 
@@ -43,6 +43,12 @@ void calcError(string[],string[],int);
     float pErrorLxYes;//2-2
     float pErrorMmYes;//2-3
     float pErrorSsYes;//2-4
+    
+//sign 
+    float pSignPPYes;
+    float pSignNNYes;
+    float pSignPPNo;
+    float pSignNNNo;
 
 
 
@@ -160,7 +166,7 @@ int main(int argc, char** argv) {
     calcClass(catArr,incr1);
     calcStab(catArr,stabArr,incr2);
     calcError(catArr,errorArr,incr3);
-    //calcSign(signArr,incr4);
+    calcSign(catArr,signArr,incr4);
     
    cout<< pErrorXlNo<<endl;//1-1
    cout<< pErrorLxNo<<endl;//1-2
@@ -313,12 +319,12 @@ void calcError(string x[],string y[], int length){
                 probBtot++;
             }
            if(y[i]== "3"){ //stab
-                probCno++;
-                probAtot++;
+                probCyes++;
+                probBtot++;
             }
             if(y[i]== "4"){ //xstab
-                probDno++;
-                probAtot++;
+                probDyes++;
+                probBtot++;
             }
         }
         
@@ -332,10 +338,10 @@ void calcError(string x[],string y[], int length){
     pErrorLxYes = probByes/probBtot;
     
     cout<<"mm / yes - "<<probCyes<<"/"<<probBtot<<endl;// 2-3
-    pErrorMmYes = probAyes/probBtot;
+    pErrorMmYes = probCyes/probBtot;
     
     cout<<"ss / yes - " <<probDyes<<"/"<<probBtot<<endl;//2-4
-    pErrorSsYes = probByes/probBtot;
+    pErrorSsYes = probDyes/probBtot;
 
     cout<<"xl / no - "<<probAno<<"/"<<probAtot<<endl;//1-1
     pErrorXlNo = probAno/probAtot;
@@ -344,11 +350,68 @@ void calcError(string x[],string y[], int length){
     pErrorLxNo = probBno/probAtot;
     
         cout<<"mm / no - "<<probCno<<"/"<<probAtot<<endl;//1-3
-    pErrorMmNo = probAno/probAtot;
+    pErrorMmNo = probCno/probAtot;
 
     cout<<"ss / no - " <<probDno<<"/"<<probAtot<<endl;//1-4   
-    pErrorSsNo = probBno/probAtot;
+    pErrorSsNo = probDno/probAtot;
     
 }
+void calcSign(string x[],string y[], int length){
+    //category Stability
+    
+    
+    float probAyes = 0;
+    float probAno = 0;
+    float probAtot = 0;
+    
+    float noauto = 0;
+    
+    float probByes = 0;
+    float probBno = 0;
+    float probBtot = 0;
+    
+    
+    for(int i=0;i<length;i++){
+        cout<<x[i]<<" - "<<y[i]<<endl;
+        
+        if(x[i] == "1"){ //noauto - NO for no auto 
+            if(y[i]== "1"){ //stab
+                probAno++;
+                probAtot++;
+            }
+            if(y[i]== "2"){ //xstab
+                probBno++;
+                probAtot++;
+            }
+        }
+        
+        else if(x[i] == "2"){//auto - YES for AUTO
+            if(y[i]== "1"){ //stab
+                probAyes++;
+                probBtot++;
+            }
+            if(y[i]== "2"){ //xstab
+                probByes++;
+                probBtot++;
+            }
+        }
+        
+    }
+        float pSignPPYes;
+    float pSignNNYes;
+    float pSignPPNo;
+    float pSignNNNo;
+    cout<<"PP / yes - "<<probAyes<<"/"<<probBtot<<endl;// 2-1
+    pSignPPYes = probAyes/probBtot;
+    
+    cout<<"NN / yes - " <<probByes<<"/"<<probBtot<<endl;//2-2
+    pSignNNYes = probByes/probBtot;
 
+    cout<<"PP / no - "<<probAno<<"/"<<probAtot<<endl;//1-1
+    pSignPPNo = probAno/probAtot;
+
+    cout<<"NN / no - " <<probBno<<"/"<<probAtot<<endl;//1-2   
+    pSignNNNo = probBno/probAtot;
+    
+}
 

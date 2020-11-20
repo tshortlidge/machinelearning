@@ -168,14 +168,7 @@ int main(int argc, char** argv) {
     calcError(catArr,errorArr,incr3);
     calcSign(catArr,signArr,incr4);
     
-   cout<< pErrorXlNo<<endl;//1-1
-   cout<< pErrorLxNo<<endl;//1-2
-   cout<< pErrorMmNo<<endl;//1-3
-   cout<< pErrorSsNo<<endl;//1-4
-   cout<< pErrorXlYes<<endl;//2-1
-   cout<< pErrorLxYes<<endl;//2-2
-   cout<< pErrorMmYes<<endl;//2-3
-   cout<< pErrorSsYes<<endl;//2-4
+    
     return 0;
 }
 
@@ -397,10 +390,7 @@ void calcSign(string x[],string y[], int length){
         }
         
     }
-        float pSignPPYes;
-    float pSignNNYes;
-    float pSignPPNo;
-    float pSignNNNo;
+
     cout<<"PP / yes - "<<probAyes<<"/"<<probBtot<<endl;// 2-1
     pSignPPYes = probAyes/probBtot;
     

@@ -110,15 +110,19 @@ int main(int argc, char** argv) {
                                 "1", "1", "3", "2", "2", "*", "1",
                                 "1", "*", "*", "*", "*", "4", "1",
                                 "2", "1", "4", "*", "*", "1", "1",
-                                "2", "1", "4", "*", "*", "2", "1"};
+                                "2", "1", "4", "*", "*", "2", "1"
+    };
     
-//     string testSetArray[]={"2", "1", "4", "*", "*", "3", "1"};
-    //keep getting segfaul if i add more into the data set!!!?!?!?!?
-       string testSetArray[]={"2", "1", "3", "1", "2", "2", "1",
-                              "1", "1", "3", "1", "1", "3", "1",
-                              "2", "1", "3", "1", "2", "3", "1"}; 
- 
- 
+//     string testSetArray[]={'2','1', '4', '*', '*', '3','1'};
+    char testSetArray[]=   {'2','1', '4', '*', '*', '3','1',
+                             '2','1', '3','1','1','1','1',
+                             '2','1', '3','1','1', '2','1',
+                             '2','1', '3','1', '2','1','1',
+                             '2','1', '3','1', '2', '2','1',
+                            '1','1', '3','1','1', '3','1',
+                             '2','1', '3','1', '2', '3','1'
+                                                        };  
+    
  
 //    string testErrorArr[]={};
       
@@ -140,13 +144,13 @@ int main(int argc, char** argv) {
     int len1 = sizeof(trainingArray)/sizeof(trainingArray[0]);
     
     //test set array
-//    int len2 = sizeof(testSetArray)/sizeof(testSetArray[0]);
+    int len2 = sizeof(testSetArray)/sizeof(testSetArray[0]);
     
     cout<<"length of array ->"<<len1<<endl;
-//    cout<<"length of array ->"<<len2<<endl;
+    cout<<"length of array ->"<<len2<<endl;
    
     const int MAX_SIZE = 8;
-    //const int TEST_MAX_SIZE = 3;    
+    const int TEST_MAX_SIZE = 7;    
 
     string catArr[MAX_SIZE] = {};//array that holds category array
     string stabArr[MAX_SIZE] = {};//arrat that holds stability array
@@ -156,16 +160,16 @@ int main(int argc, char** argv) {
     string magArr[MAX_SIZE] = {};//array that holds magnitude array
     string visArr[MAX_SIZE] = {};//array that holds visibility array
     
-    /*
-    string testcatArr[TEST_MAX_SIZE] = {};//array that holds category array
-    string teststabArr[TEST_MAX_SIZE] = {};//arrat that holds stability array
-    string testerrorArr[TEST_MAX_SIZE] = {};//array that holds error array
-    string testsignArr[TEST_MAX_SIZE] = {};//array that holds sign array
-    string testwindArr[TEST_MAX_SIZE] = {};//array that holds wind array
-    string testmagArr[TEST_MAX_SIZE] = {};//array that holds magnitude array
-    string testvisArr[TEST_MAX_SIZE] = {};//array that holds visibility array
-    */
     
+    char testcatArr[TEST_MAX_SIZE] = {};//array that holds category array
+    char teststabArr[TEST_MAX_SIZE] = {};//arrat that holds stability array
+    char testerrorArr[TEST_MAX_SIZE] = {};//array that holds error array
+    char testsignArr[TEST_MAX_SIZE] = {};//array that holds sign array
+    char testwindArr[TEST_MAX_SIZE] = {};//array that holds wind array
+    char testmagArr[TEST_MAX_SIZE] = {};//array that holds magnitude array
+    char testvisArr[TEST_MAX_SIZE] = {};//array that holds visibility array
+   
+    char errorEval[TEST_MAX_SIZE];
     int incr1,incr2,incr3,incr4,incr5,incr6,incr7 = 0;
     
    
@@ -237,11 +241,8 @@ int main(int argc, char** argv) {
     calcMagnitude(catArr,magArr,incr6);
     calcVisibility(catArr,visArr,incr7);
     
-    
-    
-    
-    /*
-    incr1,incr2,incr3,incr4,incr5,incr6,incr7 = 0;
+    //resetting array incrementation for array
+    incr1=0,incr2=0,incr3=0,incr4=0,incr5=0,incr6=0,incr7=0;
         for(int i=0;i<len2;i++){
         
         if (i == 0 || i==7 || i==14 || i==21 || i==28 || i==35 || i==42 || i==49 
@@ -298,58 +299,42 @@ int main(int argc, char** argv) {
         }
         }
     
-     */   
+        
 
-    /*
-        for(int i=0;i<len1;i++){
-            cout<<"Reading array[]"<<endl;
-            cout<<array[i]<<endl;
-        }
-        for(int i=0;i<incr;i++){
-            cout<<"Reading catArray[]"<<endl;
-            cout<<catArray[i]<<endl;
-        }
-    */
 
 
     
 
     //doing the test cases.
 
-    cout<<endl;
     float evidence =1;//need evidence to divide by probability;
 
     
 
-    
-    for(int i=0;i<2;i++){
         float dprobXyes = probXyes;//dummy variables to hold the probability
-        float dprobXno = probXno;//dummy variables to hold the probability 
-        
+        float dprobXno = probXno;//dummy variables to hold the probability   
+    for(int j=0;j<incr1;j++){//incr1 is used to loop the amount of data rows we have
+
        // cout<<"Probability of YES - 2 P(X | Auto): "<<dprobXyes<<endl;
        // cout<<"Probability of NO - 1 P(X | NoAuto): "<<dprobXno<<endl;
 
-        
-        
-        
-    /*
      
-     ***************************
-     * NEED TO FIX FOR LOOP*
-     * *************************
+     cout<<endl;
+     cout<<endl;
+     cout<<endl;
      
-     * The buckets are fucked up due to the size of array vs what number we need!
-     
-     
-     
-     
-    for(int j=0;j<7;j++){
-        cout<<j<<endl;
-    if(j==0|| j==7 || j==14 || j==21 || j==28 || j==35 || j==42 ){
-        cout<<"Did nothing"<<endl;
-    }else{
-            if(j==1 || j==8 || j==15 || j==22 || j==29 || j==36 || j==43 ){
-                if(testSetArray[j] == "1"){
+     cout<<j<<endl;
+     cout<<"test cat- "<<testcatArr[j]<<endl;//array that holds category array
+     cout<<"test stab- "<<teststabArr[j]<<endl;//arrat that holds stability array
+     cout<<"test err- "<<testerrorArr[j]<<endl;//array that holds error array
+     cout<<"test sign- "<<testsignArr[j]<<endl;//array that holds sign array
+     cout<<"test wind- "<<testwindArr[j]<<endl;//array that holds wind array
+     cout<<"test mag- "<<testmagArr[j]<<endl;//array that holds magnitude array
+     cout<<"test vis- "<<testvisArr[j]<<endl; 
+     cout<<"dprobXyes "<<dprobXyes<<endl;
+     cout<<"dprobXno "<<dprobXno<<endl;
+           
+                if(teststabArr[j] == '1'){
                     //stab
                     //update probabilities
                     dprobXyes*=pStabYes;
@@ -358,7 +343,7 @@ int main(int argc, char** argv) {
 //                    evidence+=(eStab);
 //                    cout<<"Evidence TEST: "<<evidence<<endl;
                 }
-                if(testSetArray[j] == "2"){
+                if(teststabArr[j] == '2'){
                     //xstab
                     dprobXyes*=pXStabYes;
                     dprobXno*=pXStabNo;
@@ -367,12 +352,12 @@ int main(int argc, char** argv) {
 //                    cout<<"Evidence TEST: "<<evidence<<endl;
                 }
                    
-            }
-            if(j==2 || j==9 || j==16 || j==23 || j==30 || j==37 || j==44 ){
+            
+            
                 //error
                 //xl,lx,mm,ss
                 //error
-                if(testSetArray[j] == "1"){
+                if(testerrorArr[j] == '1'){
                     //xl
                     //update probabilities
                     dprobXyes*=pErrorXlYes;
@@ -380,20 +365,20 @@ int main(int argc, char** argv) {
                     
 //                    evidence*=(eErrorXl);
                 }
-                if(testSetArray[j] == "2"){
+                if(testerrorArr[j] == '2'){
                     //lx
                     dprobXyes*=pErrorLxYes;
                     dprobXno*=pErrorLxNo;
 //                    evidence*=(eErrorLx);
                     
                 }
-                if(testSetArray[j] == "3"){
+                if(testerrorArr[j] == '3'){
                     //mm
                     dprobXyes*=pErrorMmYes;
                     dprobXno*=pErrorMmNo;
 //                    evidence*=(eErrorMm);
                 }
-                if(testSetArray[j] == "4"){
+                if(testerrorArr[j] == '4'){
                     //ss
                     dprobXyes*=pErrorSsYes;
                     dprobXno*=pErrorSsNo;
@@ -401,127 +386,90 @@ int main(int argc, char** argv) {
                 }
 
                 
-            }
-            if(j==3 || j==10 || j==17 || j==24 || j==31 || j==38 || j==45 ){
-                if(testSetArray[j] == "1"){
+            
+           
+                if(testsignArr[j] == '1'){
                     //PP
                     //update probabilities
                     dprobXyes*=pSignPPYes;
                     dprobXno*=pSignPPNo;
 //                    evidence*=(eSignPP);
                 }
-                if(testSetArray[j] == "2"){
+                if(testsignArr[j] == '2'){
                     //NN
                     dprobXyes*=pSignNNYes;
                     dprobXno*=pSignNNNo;
 //                    evidence*=(eSignNN);
                 }
-            }
-            if(j==4 || j==11 || j==18 || j==25 || j==32 || j==39 || j==46 ){
-                if(testSetArray[j] == "1"){
+            
+            
+                if(testwindArr[j] == '1'){
                     //PP
                     //update probabilities
                     dprobXyes*=pWindHeadYes;
                     dprobXno*=pWindHeadNo;
+
 //                    evidence*=(eWindHead);
                 }
-                if(testSetArray[j] == "2"){
+                if(testwindArr[j] == '2'){
                     //NN
                     dprobXyes*=pWindTailYes;
                     dprobXno*=pWindTailNo;
+                 
 //                    evidence*=(eWindTail);
                 }
-            }
-            if(j==5 || j==12 || j==19 || j==26 || j==33 || j==40 || j==47 ){
+            
+            
                 //error
                 //xl,lx,mm,ss
                 //error
-                if(testSetArray[j] == "1"){
+                if(testmagArr[j] == '1'){
                     //xl
                     //update probabilities
                     dprobXyes*=pMagLowYes;
                     dprobXno*=pMagLowNo;
 //                    evidence*=(eMagLow);
                 }
-                if(testSetArray[j] == "2"){
+                if(testmagArr[j] == '2'){
                     //lx
                     dprobXyes*=pMagMedYes;
                     dprobXno*=pMagMedNo;
 //                    evidence*=(eMagMed);
                 }
-                if(testSetArray[j] == "3"){
+                if(testmagArr[j] == '3'){
                     //mm
                     dprobXyes*=pMagStrongYes;
                     dprobXno*=pMagStrongNo;
 //                    evidence*=(eMagStrong);
                 }
-                if(testSetArray[j] == "4"){
+                if(testmagArr[j] == '4'){
                     //ss
                     dprobXyes*=pMagOutRangeYes;
                     dprobXno*=pMagOutRangeNo;
 //                    evidence*=(eMagOutRange);
                 }
 
-                
-            }
-            if(j==6 || j==13 || j==20 || j==27 || j==34 || j==41 || j==48 ){
-                if(testSetArray[j] == "1"){
+  
+            
+                if(testvisArr[j] == '1'){
                     //PP
                     //update probabilities
                     dprobXyes*=pVisYesYes;
                     dprobXno*=pVisYesNo;
 //                    evidence*=(eVisYes);
                 }
-                if(testSetArray[j] == "2"){
+                if(testvisArr[j] == '2'){
                     //NN
                     dprobXyes*=pVisNoYes;
                     dprobXno*=pVisNoNo;
 //                    evidence*=(eVisYes);
                 }
-            }
-
-           
-    }        
-    
-    
-    }     
-        
-    
-     
-     ***************************
-     * NEED TO FIX FOR LOOP ABOVE*
-     * *************************
-     
-     
-     
-     
-    
-    
-     cout<<"Probability of YES - 2 P(X | Auto): "<<dprobXyes<<endl;
-        cout<<"Probability of NO - 1 P(X | NoAuto): "<<dprobXno<<endl;
-
-
+        cout<<"here dprobXyes "<<dprobXyes<<endl;
+        cout<<"here dprobXno "<<dprobXno<<endl;
+                       
         evidence = dprobXyes+dprobXno;
 
         cout<<"Evidence normalization -> "<<evidence<<endl;
-        cout<<"Prob/Ev -> AUTO : "<<dprobXyes/evidence<<endl;
-        cout<<"Prob/Ev -> NOAUTO : "<<dprobXno/evidence<<endl;
-
-        
-
-
-
-*/
-        
-        cout<<"Probability of YES - 2 P(X | Auto): "<<dprobXyes<<endl;
-        cout<<"Probability of NO - 1 P(X | NoAuto): "<<dprobXno<<endl;
-
-
-        evidence = dprobXyes+dprobXno;
-
-        cout<<"Evidence normalization -> "<<evidence<<endl;
-        cout<<"Prob/Ev -> AUTO : "<<dprobXyes/evidence<<endl;
-        cout<<"Prob/Ev -> NOAUTO : "<<dprobXno/evidence<<endl;
         dprobXyes /= evidence;
         dprobXno /= evidence;
         cout<<"Prob/Ev -> AUTO : "<<dprobXyes<<endl;
@@ -529,19 +477,49 @@ int main(int argc, char** argv) {
         
         if(dprobXno > dprobXyes){
 //            testErrorArr[i] = "1";
-//            cout<<testErrorArr[i]<<endl;
+            cout<<"NO AUTO SELECTED"<<endl;
+            errorEval[j] = '1';
+            dprobXyes = probXyes;//dummy variables to hold the probability
+            dprobXno = probXno;//dummy variables to hold the probability   
+
 
         }else if(dprobXno < dprobXyes){
 //            testErrorArr[i] = "2";
 //            cout<<testErrorArr[i]<<endl;
-            
+            cout<<"AUTO SELECTED"<<endl;
+            errorEval[j] = '2';
+            dprobXyes = probXyes;//dummy variables to hold the probability
+            dprobXno = probXno;//dummy variables to hold the probability   
 
         }
         
+    
+     
+    }     
+     
+    float match,notmatch;
+    for(int i = 0;i<TEST_MAX_SIZE;i++){
+        
+       cout<<"Test Predicted "<<errorEval[i]<<" - Test Actual"<<testcatArr[i]<<endl;
+        
+        if(errorEval[i] == testcatArr[i]){
+            cout<<"We got a match!"<<endl;
+            match++;
+        }else{
+            cout<<"Not a match :("<<endl;
+            notmatch++;               
+        }
+        
+
     }
-       
-       
-       
+        cout<<"Match "<<match<<endl;
+        cout<<"notmatch "<<notmatch<<endl;
+        
+        
+        cout<<"Error percentage : "<<(notmatch/(match+notmatch))*100<<"%"<<endl;
+     
+    
+    
     
     return 0;
 }
@@ -644,25 +622,12 @@ void calcStab(string x[],string y[], int length){
 
 void calcError(string x[],string y[], int length){
     //category Stability
-
+    float probAtot = 0, probBtot = 0;//probBtot = AUTO 
     
-    float probAtot = 0;//probAtot = NOAUTO
-    float probBtot = 0;//probBtot = AUTO
-    
-    
-    float probAyes = 0;
-    float probAno = 0;
-    
-    
-    float probByes = 0;
-    float probBno = 0;
-
-    
-    float probCyes = 0;
-    float probCno = 0;
-    
-    float probDyes = 0;
-    float probDno = 0;
+    float probAyes = 0, probAno = 0;   
+    float probByes = 0, probBno = 0;
+    float probCyes = 0, probCno = 0;
+    float probDyes = 0, probDno = 0;
     
     
     for(int i=0;i<length;i++){
@@ -897,26 +862,13 @@ void calcWind(string x[],string y[], int length){
 }
 
 void calcMagnitude(string x[],string y[], int length){
-    //category Stability
-
+    //category Stability   
+    float probAtot = 0, probBtot = 0;//probBtot = AUTO 
     
-    float probAtot = 0;//probAtot = NOAUTO
-    float probBtot = 0;//probBtot = AUTO
-    
-    
-    float probAyes = 0;
-    float probAno = 0;
-    
-    
-    float probByes = 0;
-    float probBno = 0;
-
-    
-    float probCyes = 0;
-    float probCno = 0;
-    
-    float probDyes = 0;
-    float probDno = 0;
+    float probAyes = 0, probAno = 0;   
+    float probByes = 0, probBno = 0;
+    float probCyes = 0, probCno = 0;
+    float probDyes = 0, probDno = 0;
     
     
     for(int i=0;i<length;i++){
@@ -967,16 +919,19 @@ void calcMagnitude(string x[],string y[], int length){
         //algorithm
         if(probAyes == 0 || probByes == 0 || probCyes ==0 || probDyes == 0 ||
         probAno == 0 || probBno == 0 ||probCno == 0 || probDno == 0){
-        probAyes+=1;
-        probByes+=1;
-        probCyes+=1;
-        probDyes+=1;
-        probAno+=1;
-        probBno+=1;
-        probCno+=1;
-        probDno+=1;
-        probBtot+=4;
-        probAtot+=4;
+       
+        
+            
+            probAyes+=1;
+            probByes+=1;
+            probCyes+=1;
+            probDyes+=1;
+            probAno+=1;
+            probBno+=1;
+            probCno+=1;
+            probDno+=1;
+            probBtot+=4;
+            probAtot+=4;
         
     }
     
@@ -1004,12 +959,7 @@ void calcMagnitude(string x[],string y[], int length){
 
     cout<<"mag OOR / no - " <<probDno<<"/"<<probAtot<<endl;//1-4   
     pMagOutRangeNo = probDno/probAtot;
-/*    
-    eMagLow = (probAyes + probAno)/(probAtot + probBtot);
-    eMagMed = (probByes + probBno)/(probAtot + probBtot);
-    eMagStrong = (probCyes + probCno)/(probAtot + probBtot);
-    eMagOutRange = (probDyes + probDno)/(probAtot + probBtot);
- */ 
+
 }
 
 void calcVisibility(string x[],string y[], int length){
@@ -1063,9 +1013,6 @@ void calcVisibility(string x[],string y[], int length){
         probAtot+=2;
         
     }
- 
-
-
 
     cout<<"yes / yes - "<<probAyes<<"/"<<probBtot<<endl;// 2-1
     pVisYesYes = probAyes/probBtot;

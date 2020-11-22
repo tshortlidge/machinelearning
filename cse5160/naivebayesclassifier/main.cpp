@@ -32,7 +32,9 @@ void calcVisibility(string[],string[],int);
  */
 
 
-//Global Variable for Storing Probabilities.
+
+
+//Global Variable for Storing Probabilities of each outcome for training.
 //For Category
     float probXyes,probXno = 0;
 //for Stability
@@ -40,6 +42,8 @@ void calcVisibility(string[],string[],int);
     float pStabNo;//1-1
     float pXStabYes;//2-2
     float pXStabNo;//2-1
+    
+    float eStab, eXStab;
     
 //error
     float pErrorXlNo;//1-1
@@ -51,11 +55,15 @@ void calcVisibility(string[],string[],int);
     float pErrorMmYes;//2-3
     float pErrorSsYes;//2-4
     
+    float eErrorXl, eErrorLx, eErrorMm, eErrorSs;
+    
 //sign 
     float pSignPPYes;//2-1
     float pSignNNYes;//2-2
     float pSignPPNo;//1-1
     float pSignNNNo;//1-2
+    
+    float eSignPP, eSignNN;
     
 //wind
     float pWindHeadYes;//2-1
@@ -63,6 +71,7 @@ void calcVisibility(string[],string[],int);
     float pWindHeadNo;//1-1
     float pWindTailNo;//1-2
     
+    float eWindHead, eWindTail;
 //Magnitude
     float pMagLowNo;//1-1
     float pMagMedNo;//1-2
@@ -72,6 +81,8 @@ void calcVisibility(string[],string[],int);
     float pMagMedYes;//2-2
     float pMagStrongYes;//2-3
     float pMagOutRangeYes;//2-4
+    
+    float eMagLow, eMagMed, eMagStrong, eMagOutRange;
 
 //Visibility
     float pVisYesYes;//2-1
@@ -79,6 +90,7 @@ void calcVisibility(string[],string[],int);
     float pVisYesNo;//1-1
     float pVisNoNo;//1-2  
     
+    float eVisYes, eVisNo;
     
 
 //Need a Zero Checker for probabilities since we cannot ever get 0. need to add
@@ -91,20 +103,20 @@ void calcVisibility(string[],string[],int);
 
 int main(int argc, char** argv) {
     
-    string trainingArray[] = {"2", "*", "*", "*", "*", "*", "2",
-                      "1", "2", "*", "*", "*", "*", "1",
-                      "1", "1", "2", "*", "*", "*", "1",
-                      "1", "1", "1", "*", "*", "*", "1",
-                      "1", "1", "3", "2", "2", "*", "1",
-                      "1", "*", "*", "*", "*", "4", "1",
-                      "2", "1", "4", "*", "*", "1", "1",
-                      "2", "1", "4", "*", "*", "2", "1",
+    string trainingArray[] =   {"2", "*", "*", "*", "*", "*", "2",
+                                "1", "2", "*", "*", "*", "*", "1",
+                                "1", "1", "2", "*", "*", "*", "1",
+                                "1", "1", "1", "*", "*", "*", "1",
+                                "1", "1", "3", "2", "2", "*", "1",
+                                "1", "*", "*", "*", "*", "4", "1",
+                                "2", "1", "4", "*", "*", "1", "1",
+                                "2", "1", "4", "*", "*", "2", "1",
     
     
                                                         };
     
-      string testSetArray[]={"2", "1", "3", "1", "1", "1", "1"};
-/*    string testSetArray[]={"2", "1", "4", "*", "*", "3", "1",
+     string testSetArray[]={"2", "1", "4", "*", "*", "3", "1"};
+/*   string testSetArray[]=   {"2", "1", "4", "*", "*", "3", "1",
                              "2", "1", "3", "1", "1", "1", "1",
                              "2", "1", "3", "1", "1", "2", "1",
                              "2", "1", "3", "1", "2", "1", "1",
@@ -113,8 +125,10 @@ int main(int argc, char** argv) {
                              "2", "1", "3", "1", "2", "3", "1",
     
     
-                                                        };
-*/    
+                                                        };  
+ */
+    string testErrorArr[]={};
+      
     // Class: NOAUTO, AUTO-> 1,2
     // STABILITY: stab, xstab->1,2
     // ERROR: XL,LX,MM,SS-> 1,2,3,4
@@ -149,7 +163,7 @@ int main(int argc, char** argv) {
     
    
     //splitting the array in half for training set and test set
-    for(int i=0;i<len1-1;i++){
+    for(int i=0;i<len1;i++){
         
         if (i == 0 || i==7 || i==14 || i==21 || i==28 || i==35 || i==42 || i==49 
                 || i==56){
@@ -234,130 +248,236 @@ int main(int argc, char** argv) {
     calcVisibility(catArr,visArr,incr7);
     
 
-
     //doing the test cases.
-    for(int j=0;j<len2-1;j++){
-    //float probXyes,probXno = 0;
-        if(j>=0 && j<=7){
-            if(j==1){
+        for(int i=0;i<len2;i++){
+        cout<<testSetArray[i];
+        }
+    cout<<endl;
+    float evidence =1;//need evidence to divide by probability;
+
+    
+
+    
+    for(int i=0;i<2;i++){
+        float dprobXyes = probXyes;//dummy variables to hold the probability
+        float dprobXno = probXno;//dummy variables to hold the probability 
+        
+       // cout<<"Probability of YES - 2 P(X | Auto): "<<dprobXyes<<endl;
+       // cout<<"Probability of NO - 1 P(X | NoAuto): "<<dprobXno<<endl;
+
+        
+        
+        
+    /*
+     
+     ***************************
+     * NEED TO FIX FOR LOOP*
+     * *************************
+     
+     * The buckets are fucked up due to the size of array vs what number we need!
+     
+     
+     
+     */
+    for(int j=0;j<7;j++){
+        cout<<j<<endl;
+    if(j==0|| j==7 || j==14 || j==21 || j==28 || j==35 || j==42 ){
+        cout<<"Did nothing"<<endl;
+    }else{
+            if(j==1 || j==8 || j==15 || j==22 || j==29 || j==36 || j==43 ){
                 if(testSetArray[j] == "1"){
                     //stab
                     //update probabilities
-                    probXyes*=pStabYes;
-                    probXno*=pStabNo;
+                    dprobXyes*=pStabYes;
+                    dprobXno*=pStabNo;
+                    
+//                    evidence+=(eStab);
+//                    cout<<"Evidence TEST: "<<evidence<<endl;
                 }
                 if(testSetArray[j] == "2"){
                     //xstab
-                    probXyes*=pXStabYes;
-                    probXno*=pXStabNo;
+                    dprobXyes*=pXStabYes;
+                    dprobXno*=pXStabNo;
+                    
+//                    evidence=(pXStabYes+pXStabNo);
+//                    cout<<"Evidence TEST: "<<evidence<<endl;
                 }
                    
             }
-            if(j==2){
+            if(j==2 || j==9 || j==16 || j==23 || j==30 || j==37 || j==44 ){
                 //error
                 //xl,lx,mm,ss
                 //error
                 if(testSetArray[j] == "1"){
                     //xl
                     //update probabilities
-                    probXyes*=pErrorXlYes;
-                    probXno*=pErrorXlNo;
+                    dprobXyes*=pErrorXlYes;
+                    dprobXno*=pErrorXlNo;
+                    
+//                    evidence*=(eErrorXl);
                 }
                 if(testSetArray[j] == "2"){
                     //lx
-                    probXyes*=pErrorLxYes;
-                    probXno*=pErrorLxNo;
+                    dprobXyes*=pErrorLxYes;
+                    dprobXno*=pErrorLxNo;
+//                    evidence*=(eErrorLx);
+                    
                 }
                 if(testSetArray[j] == "3"){
                     //mm
-                    probXyes*=pErrorMmYes;
-                    probXno*=pErrorMmNo;
+                    dprobXyes*=pErrorMmYes;
+                    dprobXno*=pErrorMmNo;
+//                    evidence*=(eErrorMm);
                 }
                 if(testSetArray[j] == "4"){
                     //ss
-                    probXyes*=pErrorSsYes;
-                    probXno*=pErrorSsNo;
+                    dprobXyes*=pErrorSsYes;
+                    dprobXno*=pErrorSsNo;
+//                    evidence*=(eErrorSs);
                 }
 
                 
             }
-            if(j==3){
+            if(j==3 || j==10 || j==17 || j==24 || j==31 || j==38 || j==45 ){
                 if(testSetArray[j] == "1"){
                     //PP
                     //update probabilities
-                    probXyes*=pSignPPYes;
-                    probXno*=pSignPPNo;
+                    dprobXyes*=pSignPPYes;
+                    dprobXno*=pSignPPNo;
+//                    evidence*=(eSignPP);
                 }
                 if(testSetArray[j] == "2"){
                     //NN
-                    probXyes*=pSignNNYes;
-                    probXno*=pSignNNNo;
+                    dprobXyes*=pSignNNYes;
+                    dprobXno*=pSignNNNo;
+//                    evidence*=(eSignNN);
                 }
             }
-            if(j==4){
+            if(j==4 || j==11 || j==18 || j==25 || j==32 || j==39 || j==46 ){
                 if(testSetArray[j] == "1"){
                     //PP
                     //update probabilities
-                    probXyes*=pWindHeadYes;
-                    probXno*=pWindHeadNo;
+                    dprobXyes*=pWindHeadYes;
+                    dprobXno*=pWindHeadNo;
+//                    evidence*=(eWindHead);
                 }
                 if(testSetArray[j] == "2"){
                     //NN
-                    probXyes*=pWindTailYes;
-                    probXno*=pWindTailNo;
+                    dprobXyes*=pWindTailYes;
+                    dprobXno*=pWindTailNo;
+//                    evidence*=(eWindTail);
                 }
             }
-            if(j==5){
+            if(j==5 || j==12 || j==19 || j==26 || j==33 || j==40 || j==47 ){
                 //error
                 //xl,lx,mm,ss
                 //error
                 if(testSetArray[j] == "1"){
                     //xl
                     //update probabilities
-                    probXyes*=pMagLowYes;
-                    probXno*=pMagLowNo;
+                    dprobXyes*=pMagLowYes;
+                    dprobXno*=pMagLowNo;
+//                    evidence*=(eMagLow);
                 }
                 if(testSetArray[j] == "2"){
                     //lx
-                    probXyes*=pMagMedYes;
-                    probXno*=pMagMedNo;
+                    dprobXyes*=pMagMedYes;
+                    dprobXno*=pMagMedNo;
+//                    evidence*=(eMagMed);
                 }
                 if(testSetArray[j] == "3"){
                     //mm
-                    probXyes*=pMagStrongYes;
-                    probXno*=pMagStrongNo;
+                    dprobXyes*=pMagStrongYes;
+                    dprobXno*=pMagStrongNo;
+//                    evidence*=(eMagStrong);
                 }
                 if(testSetArray[j] == "4"){
                     //ss
-                    probXyes*=pMagOutRangeYes;
-                    probXno*=pMagOutRangeNo;
+                    dprobXyes*=pMagOutRangeYes;
+                    dprobXno*=pMagOutRangeNo;
+//                    evidence*=(eMagOutRange);
                 }
 
                 
             }
-            if(j==6){
+            if(j==6 || j==13 || j==20 || j==27 || j==34 || j==41 || j==48 ){
                 if(testSetArray[j] == "1"){
                     //PP
                     //update probabilities
-                    probXyes*=pVisYesYes;
-                    probXno*=pVisYesNo;
+                    dprobXyes*=pVisYesYes;
+                    dprobXno*=pVisYesNo;
+//                    evidence*=(eVisYes);
                 }
                 if(testSetArray[j] == "2"){
                     //NN
-                    probXyes*=pVisNoYes;
-                    probXno*=pVisNoNo;
+                    dprobXyes*=pVisNoYes;
+                    dprobXno*=pVisNoNo;
+//                    evidence*=(eVisYes);
                 }
             }
+
            
+    }        
+    
+    
+    }     
+        
+    /*
+     
+     ***************************
+     * NEED TO FIX FOR LOOP ABOVE*
+     * *************************
+     
+     
+     
+     
+     */
+    /*
+     cout<<"Probability of YES - 2 P(X | Auto): "<<dprobXyes<<endl;
+        cout<<"Probability of NO - 1 P(X | NoAuto): "<<dprobXno<<endl;
+
+
+        evidence = dprobXyes+dprobXno;
+
+        cout<<"Evidence normalization -> "<<evidence<<endl;
+        cout<<"Prob/Ev -> AUTO : "<<dprobXyes/evidence<<endl;
+        cout<<"Prob/Ev -> NOAUTO : "<<dprobXno/evidence<<endl;
+
+        
+
+
+
+*/
+        
+        cout<<"Probability of YES - 2 P(X | Auto): "<<dprobXyes<<endl;
+        cout<<"Probability of NO - 1 P(X | NoAuto): "<<dprobXno<<endl;
+
+
+        evidence = dprobXyes+dprobXno;
+
+        cout<<"Evidence normalization -> "<<evidence<<endl;
+        cout<<"Prob/Ev -> AUTO : "<<dprobXyes/evidence<<endl;
+        cout<<"Prob/Ev -> NOAUTO : "<<dprobXno/evidence<<endl;
+        dprobXyes /= evidence;
+        dprobXno /= evidence;
+        cout<<"Prob/Ev -> AUTO : "<<dprobXyes<<endl;
+        cout<<"Prob/Ev -> NOAUTO : "<<dprobXno<<endl;
+        
+        if(dprobXno > dprobXyes){
+            testErrorArr[i] = "1";
+            cout<<testErrorArr[i]<<endl;
+
+        }else if(dprobXno < dprobXyes){
+            testErrorArr[i] = "2";
+            cout<<testErrorArr[i]<<endl;
+            
 
         }
-
         
-        
-    } 
-     
-    cout<<"Probability of YES - 2 P(X | Auto): "<<probXyes<<endl;
-    cout<<"Probability of NO - 1 P(X | NoAuto): "<<probXno<<endl;
+    }
+       
+       
+    
     
     
     return 0;
@@ -396,14 +516,11 @@ void calcStab(string x[],string y[], int length){
     float probAyes = 0;
     float probAno = 0;
     float probAtot = 0;
-    
-    float noauto = 0;
-    
+       
     float probByes = 0;
     float probBno = 0;
     float probBtot = 0;
     
-    float autopilot = 0;
     
     for(int i=0;i<length;i++){
         cout<<x[i]<<" - "<<y[i]<<endl;
@@ -417,7 +534,6 @@ void calcStab(string x[],string y[], int length){
                 probBno++;
                 probAtot++;
             }
-          noauto++;  
         }
         
         else if(x[i] == "2"){//auto - YES for AUTO
@@ -429,7 +545,6 @@ void calcStab(string x[],string y[], int length){
                 probByes++;
                 probBtot++;
             }
-          autopilot++;
         }
         
     }
@@ -458,7 +573,10 @@ void calcStab(string x[],string y[], int length){
 
     cout<<"Xstab / no - " <<probBno<<"/"<<probAtot<<endl;//1-2   
     pXStabNo = probBno/probAtot;
-    
+/*    
+    eStab = (probAyes + probAno)/(probAtot + probBtot);
+    eXStab = (probByes + probBno)/(probAtot + probBtot);
+*/    
 }
 
 void calcError(string x[],string y[], int length){
@@ -568,7 +686,12 @@ void calcError(string x[],string y[], int length){
 
     cout<<"ss / no - " <<probDno<<"/"<<probAtot<<endl;//1-4   
     pErrorSsNo = probDno/probAtot;
-    
+/*    
+    eErrorXl = (probAyes + probAno)/(probAtot + probBtot);
+    eErrorLx = (probByes + probBno)/(probAtot + probBtot);
+    eErrorMm = (probCyes + probCno)/(probAtot + probBtot);
+    eErrorSs = (probDyes + probDno)/(probAtot + probBtot);
+*/    
 }
 void calcSign(string x[],string y[], int length){
     //category Stability
@@ -634,7 +757,10 @@ void calcSign(string x[],string y[], int length){
 
     cout<<"NN / no - " <<probBno<<"/"<<probAtot<<endl;//1-2   
     pSignNNNo = probBno/probAtot;
-    
+/* 
+    eSignPP = (probAyes + probAno)/(probAtot + probBtot);
+    eSignNN = (probByes + probBno)/(probAtot + probBtot);
+ */
 }
 
 void calcWind(string x[],string y[], int length){
@@ -701,7 +827,10 @@ void calcWind(string x[],string y[], int length){
 
     cout<<"tail / no - " <<probBno<<"/"<<probAtot<<endl;//1-2   
     pWindTailNo = probBno/probAtot;
-    
+/*    
+    eWindHead = (probAyes + probAno)/(probAtot + probBtot);
+    eWindTail = (probByes + probBno)/(probAtot + probBtot);
+*/    
 }
 
 void calcMagnitude(string x[],string y[], int length){
@@ -812,7 +941,12 @@ void calcMagnitude(string x[],string y[], int length){
 
     cout<<"mag OOR / no - " <<probDno<<"/"<<probAtot<<endl;//1-4   
     pMagOutRangeNo = probDno/probAtot;
-  
+/*    
+    eMagLow = (probAyes + probAno)/(probAtot + probBtot);
+    eMagMed = (probByes + probBno)/(probAtot + probBtot);
+    eMagStrong = (probCyes + probCno)/(probAtot + probBtot);
+    eMagOutRange = (probDyes + probDno)/(probAtot + probBtot);
+ */ 
 }
 
 void calcVisibility(string x[],string y[], int length){
@@ -881,6 +1015,9 @@ void calcVisibility(string x[],string y[], int length){
 
     cout<<"no / no - " <<probBno<<"/"<<probAtot<<endl;//1-2   
     pVisNoNo = probBno/probAtot;
+    
+//    eVisYes = (probAyes + probAno)/(probAtot + probBtot);
+//    eVisNo = (probByes + probBno)/(probAtot + probBtot);
     
 }
 

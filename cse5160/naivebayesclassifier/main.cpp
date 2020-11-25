@@ -43,7 +43,6 @@ void calcVisibility(string[],string[],int);
     float pXStabYes;//2-2
     float pXStabNo;//2-1
     
-    float eStab, eXStab;
     
 //error
     float pErrorXlNo;//1-1
@@ -55,7 +54,6 @@ void calcVisibility(string[],string[],int);
     float pErrorMmYes;//2-3
     float pErrorSsYes;//2-4
     
-    float eErrorXl, eErrorLx, eErrorMm, eErrorSs;
     
 //sign 
     float pSignPPYes;//2-1
@@ -63,7 +61,6 @@ void calcVisibility(string[],string[],int);
     float pSignPPNo;//1-1
     float pSignNNNo;//1-2
     
-    float eSignPP, eSignNN;
     
 //wind
     float pWindHeadYes;//2-1
@@ -71,7 +68,6 @@ void calcVisibility(string[],string[],int);
     float pWindHeadNo;//1-1
     float pWindTailNo;//1-2
     
-    float eWindHead, eWindTail;
 //Magnitude
     float pMagLowNo;//1-1
     float pMagMedNo;//1-2
@@ -82,7 +78,6 @@ void calcVisibility(string[],string[],int);
     float pMagStrongYes;//2-3
     float pMagOutRangeYes;//2-4
     
-    float eMagLow, eMagMed, eMagStrong, eMagOutRange;
 
 //Visibility
     float pVisYesYes;//2-1
@@ -90,7 +85,6 @@ void calcVisibility(string[],string[],int);
     float pVisYesNo;//1-1
     float pVisNoNo;//1-2  
     
-    float eVisYes, eVisNo;
     
 
 //Need a Zero Checker for probabilities since we cannot ever get 0. need to add
@@ -113,15 +107,14 @@ int main(int argc, char** argv) {
                                 "2", "1", "4", "*", "*", "2", "1"
     };
     
-//     string testSetArray[]={'2','1', '4', '*', '*', '3','1'};
-    char testSetArray[]=   {'2','1', '4', '*', '*', '3','1',
-                             '2','1', '3','1','1','1','1',
-                             '2','1', '3','1','1', '2','1',
-                             '2','1', '3','1', '2','1','1',
-                             '2','1', '3','1', '2', '2','1',
-                            '1','1', '3','1','1', '3','1',
-                             '2','1', '3','1', '2', '3','1'
-                                                        };  
+    char testSetArray[]=    {'2', '1', '4', '*', '*', '3', '1',
+                             '2', '1', '3', '1', '1', '1', '1',
+                             '2', '1', '3', '1', '1', '2', '1',
+                             '2', '1', '3', '1', '2', '1', '1',
+                             '2', '1', '3', '1', '2', '2', '1',
+                             '1', '1', '3', '1', '1', '3', '1',
+                             '2', '1', '3', '1', '2', '3', '1'
+                                                               };  
     
  
 //    string testErrorArr[]={};
@@ -178,14 +171,14 @@ int main(int argc, char** argv) {
         
         if (i == 0 || i==7 || i==14 || i==21 || i==28 || i==35 || i==42 || i==49 
                 ){
-            cout<<"We are inside the function category"<<endl;
+            //cout<<"We are inside the function category"<<endl;
             catArr[incr1] = trainingArray[i];
             
             incr1++;
         }
         if (i == 1 || i==8 || i==15 || i==22 || i==29 || i==36 || i==43 || i==50 
                 ){
-            cout<<"We are inside the function stability"<<endl;
+            //cout<<"We are inside the function stability"<<endl;
             stabArr[incr2] = trainingArray[i];
             
             
@@ -193,21 +186,21 @@ int main(int argc, char** argv) {
         }
         if (i == 2 || i==9 || i==16 || i==23 || i==30 || i==37 || i==44 || i==51 
                 ){
-            cout<<"We are inside the function error"<<endl;
+            //cout<<"We are inside the function error"<<endl;
             errorArr[incr3] = trainingArray[i];
             
             incr3++;
         }
         if (i == 3 || i==10 || i==17 || i==24 || i==31 || i==38 || i==45 || i==52 
                 ){
-            cout<<"We are inside the function sign"<<endl;
+            //cout<<"We are inside the function sign"<<endl;
             signArr[incr4] = trainingArray[i];
             
             incr4++;
         }
         if (i == 4 || i==11 || i==18 || i==25 || i==32 || i==39 || i==46 || i==53 
                 ){
-            cout<<"We are inside the function wind"<<endl;
+            //cout<<"We are inside the function wind"<<endl;
             windArr[incr5] = trainingArray[i];
             
             
@@ -215,7 +208,7 @@ int main(int argc, char** argv) {
         }
         if (i == 5 || i==12 || i==19 || i==26 || i==33 || i==40 || i==47 || i==54 
                 ){
-            cout<<"We are inside the function magnitude"<<endl;
+            //cout<<"We are inside the function magnitude"<<endl;
             magArr[incr6] = trainingArray[i];
             
             
@@ -223,7 +216,7 @@ int main(int argc, char** argv) {
         }
         if (i == 6 || i==13 || i==20 || i==27 || i==34 || i==41 || i==48 || i==55 
                 ){
-            cout<<"We are inside the function visibility"<<endl;
+            //cout<<"We are inside the function visibility"<<endl;
             visArr[incr7] = trainingArray[i];
             
             incr7++;
@@ -247,14 +240,14 @@ int main(int argc, char** argv) {
         
         if (i == 0 || i==7 || i==14 || i==21 || i==28 || i==35 || i==42 || i==49 
                 || i==56){
-            cout<<"We are inside the function category"<<endl;
+            //cout<<"We are inside the function category"<<endl;
             testcatArr[incr1] = testSetArray[i];
             
             incr1++;
         }
         if (i == 1 || i==8 || i==15 || i==22 || i==29 || i==36 || i==43 || i==50 
                 || i==57){
-            cout<<"We are inside the function stability"<<endl;
+            //cout<<"We are inside the function stability"<<endl;
             teststabArr[incr2] = testSetArray[i];
             
             
@@ -262,21 +255,21 @@ int main(int argc, char** argv) {
         }
         if (i == 2 || i==9 || i==16 || i==23 || i==30 || i==37 || i==44 || i==51 
                 || i==58){
-            cout<<"We are inside the function error"<<endl;
+            //cout<<"We are inside the function error"<<endl;
             testerrorArr[incr3] = testSetArray[i];
             
             incr3++;
         }
         if (i == 3 || i==10 || i==17 || i==24 || i==31 || i==38 || i==45 || i==52 
                 || i==59){
-            cout<<"We are inside the function sign"<<endl;
+            //cout<<"We are inside the function sign"<<endl;
             testsignArr[incr4] = testSetArray[i];
             
             incr4++;
         }
         if (i == 4 || i==11 || i==18 || i==25 || i==32 || i==39 || i==46 || i==53 
                 || i==60){
-            cout<<"We are inside the function wind"<<endl;
+            //cout<<"We are inside the function wind"<<endl;
             testwindArr[incr5] = testSetArray[i];
             
             
@@ -284,7 +277,7 @@ int main(int argc, char** argv) {
         }
         if (i == 5 || i==12 || i==19 || i==26 || i==33 || i==40 || i==47 || i==54 
                 || i==61){
-            cout<<"We are inside the function magnitude"<<endl;
+            //cout<<"We are inside the function magnitude"<<endl;
             testmagArr[incr6] = testSetArray[i];
             
             
@@ -292,7 +285,7 @@ int main(int argc, char** argv) {
         }
         if (i == 6 || i==13 || i==20 || i==27 || i==34 || i==41 || i==48 || i==55 
                 || i==62){
-            cout<<"We are inside the function visibility"<<endl;
+            //cout<<"We are inside the function visibility"<<endl;
             testvisArr[incr7] = testSetArray[i];
             
             incr7++;
@@ -308,17 +301,12 @@ int main(int argc, char** argv) {
     //doing the test cases.
 
     float evidence =1;//need evidence to divide by probability;
-
+    float dprobXyes = probXyes;//dummy variables to hold the probability
+    float dprobXno = probXno;//dummy variables to hold the probability
     
-
-        float dprobXyes = probXyes;//dummy variables to hold the probability
-        float dprobXno = probXno;//dummy variables to hold the probability   
+    
     for(int j=0;j<incr1;j++){//incr1 is used to loop the amount of data rows we have
 
-       // cout<<"Probability of YES - 2 P(X | Auto): "<<dprobXyes<<endl;
-       // cout<<"Probability of NO - 1 P(X | NoAuto): "<<dprobXno<<endl;
-
-     
      cout<<endl;
      cout<<endl;
      cout<<endl;
@@ -336,20 +324,17 @@ int main(int argc, char** argv) {
            
                 if(teststabArr[j] == '1'){
                     //stab
-                    //update probabilities
+                    //update probability
                     dprobXyes*=pStabYes;
                     dprobXno*=pStabNo;
-                    
-//                    evidence+=(eStab);
-//                    cout<<"Evidence TEST: "<<evidence<<endl;
+
                 }
                 if(teststabArr[j] == '2'){
                     //xstab
+                    //update probability                    
                     dprobXyes*=pXStabYes;
                     dprobXno*=pXStabNo;
-                    
-//                    evidence=(pXStabYes+pXStabNo);
-//                    cout<<"Evidence TEST: "<<evidence<<endl;
+
                 }
                    
             
@@ -500,7 +485,7 @@ int main(int argc, char** argv) {
     float match,notmatch;
     for(int i = 0;i<TEST_MAX_SIZE;i++){
         
-       cout<<"Test Predicted "<<errorEval[i]<<" - Test Actual"<<testcatArr[i]<<endl;
+       cout<<"Test Predicted "<<errorEval[i]<<" - Test Actual "<<testcatArr[i]<<endl;
         
         if(errorEval[i] == testcatArr[i]){
             cout<<"We got a match!"<<endl;
@@ -516,7 +501,7 @@ int main(int argc, char** argv) {
         cout<<"notmatch "<<notmatch<<endl;
         
         
-        cout<<"Error percentage : "<<(notmatch/(match+notmatch))*100<<"%"<<endl;
+        cout<<"Test Error percentage : "<<(notmatch/(match+notmatch))*100<<"%"<<endl;
      
     
     
@@ -525,10 +510,9 @@ int main(int argc, char** argv) {
 }
 
 void calcClass(string x[], int length){
-    int totalProb = 0;
-    float probA = 0;
+    float probA = 0;//dummy variables to hold auto(2) - B or no auto(1) - A 
     float probB = 0;
-    float totalAB = 0;
+    float totalAB = 0;//total # of yes's or no's to determine rate
     for(int i=0;i<length;i++){
         cout<<x[i]<<endl;
         if(x[i] == "1"){
@@ -540,15 +524,20 @@ void calcClass(string x[], int length){
             totalAB++;
         }
         
+    }
+        //additive condition if we have one probability = 0 it messes up the
+//algorithm
+    if(probA== 0 || probB== 0){
+        probA+=1;
+        probB+=1;
 
+        totalAB+=2;
         
     }
-    probXno = probA/totalAB;
-    probXyes = probB/totalAB;
-    totalProb = probA + probB;
-    
-        cout<<"Probability of A(NOAUTO) "<<probA<<"/"<<totalProb<<" - "<<probXno<<endl;
-        cout<<"Probability of B(AUTO) "<<probB<<"/"<<totalProb<<" - "<<probXyes<<endl;
+    probXno = probA/totalAB;//probXno stores the probability as a global variable(NOAUTO/NO/1)
+    probXyes = probB/totalAB;//probXyes stores the probability as a global variable(AUTO/YES/2)
+        cout<<"Probability of A(NOAUTO) "<<probA<<"/"<<totalAB<<" - "<<probXno<<endl;
+        cout<<"Probability of B(AUTO) "<<probB<<"/"<<totalAB<<" - "<<probXyes<<endl;
 }
 void calcStab(string x[],string y[], int length){
     //category Stability
@@ -1017,10 +1006,10 @@ void calcVisibility(string x[],string y[], int length){
     cout<<"yes / yes - "<<probAyes<<"/"<<probBtot<<endl;// 2-1
     pVisYesYes = probAyes/probBtot;
     
-    cout<<"no / yes - " <<probByes<<"/"<<probBtot<<endl;//2-2
+    cout<<"yes / no - " <<probByes<<"/"<<probBtot<<endl;//2-2
     pVisNoYes = probByes/probBtot;
 
-    cout<<"yes / no - "<<probAno<<"/"<<probAtot<<endl;//1-1
+    cout<<"no / yes - "<<probAno<<"/"<<probAtot<<endl;//1-1
     pVisYesNo = probAno/probAtot;
 
     cout<<"no / no - " <<probBno<<"/"<<probAtot<<endl;//1-2   
